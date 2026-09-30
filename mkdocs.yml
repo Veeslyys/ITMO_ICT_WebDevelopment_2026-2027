@@ -1,0 +1,9 @@
+site_name: Web Programming Labs
+site_description: Documentation for ITMO web programming laboratory works
+site_url: https://veeslyys.github.io/ITMO_ICT_WebDevelopment_2026-2027/
+repo_url: https://github.com/Veeslyys/ITMO_ICT_WebDevelopment_2026-2027
+theme:
+  name: readthedocs
+nav:
+  - Главная: index.md
+  - ЛР1. Работа с сокетами: lab1.md
