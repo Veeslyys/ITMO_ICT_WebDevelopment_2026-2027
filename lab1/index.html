@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://veeslyys.github.io/ITMO_ICT_WebDevelopment_2026-2027/lab1/" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>ЛР1. Работа с сокетами - Web Programming Labs</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "\u041b\u04201. \u0420\u0430\u0431\u043e\u0442\u0430 \u0441 \u0441\u043e\u043a\u0435\u0442\u0430\u043c\u0438";
+        var mkdocs_page_input_path = "lab1.md";
+        var mkdocs_page_url = "/ITMO_ICT_WebDevelopment_2026-2027/lab1/";
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> Web Programming Labs
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">Главная</a>
+                </li>
+              </ul>
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href="#">ЛР1. Работа с сокетами</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#_1">Цель работы</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#_2">Структура проекта</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#1-udp">Задание 1. UDP клиент и сервер</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#2-tcp">Задание 2. TCP вычисление гипотенузы</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#3-http-">Задание 3. Простой HTTP-сервер</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#4">Задание 4. Многопользовательский чат</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#5-web-">Задание 5. Web-сервер оценок</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#_3">Вывод</a>
+    </li>
+    </ul>
+                </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">Web Programming Labs</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">ЛР1. Работа с сокетами</li>
+    <li class="wy-breadcrumbs-aside">
+          <a href="https://github.com/Veeslyys/ITMO_ICT_WebDevelopment_2026-2027/edit/master/docs/lab1.md" class="icon icon-github"> Edit on GitHub</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="1">ЛР1. Работа с сокетами</h1>
+<h2 id="_1">Цель работы</h2>
+<p>Изучить основы работы с библиотекой <code>socket</code> в Python и реализовать простые клиент-серверные приложения с использованием протоколов UDP, TCP и HTTP.</p>
+<h2 id="_2">Структура проекта</h2>
+<pre><code class="language-text">lab1_sockets/
+├── task1_udp/
+│   ├── udp_server.py
+│   └── udp_client.py
+├── task2_tcp_math/
+│   ├── tcp_math_server.py
+│   └── tcp_math_client.py
+├── task3_http_file/
+│   ├── http_server.py
+│   └── index.html
+├── task4_chat/
+│   ├── chat_server.py
+│   └── chat_client.py
+├── task5_web_grades/
+│   └── web_grades_server.py
+├── README.md
+└── report.txt
+</code></pre>
+<h2 id="1-udp">Задание 1. UDP клиент и сервер</h2>
+<p>Реализованы UDP-сервер и UDP-клиент. Клиент отправляет сообщение <code>Hello, server</code>, сервер принимает его, выводит в консоль и отправляет ответ <code>Hello, client</code>.</p>
+<p>Файлы:</p>
+<ul>
+<li><code>lab1_sockets/task1_udp/udp_server.py</code></li>
+<li><code>lab1_sockets/task1_udp/udp_client.py</code></li>
+</ul>
+<p>Запуск:</p>
+<pre><code class="language-bash">cd lab1_sockets/task1_udp
+python3 udp_server.py
+python3 udp_client.py
+</code></pre>
+<h2 id="2-tcp">Задание 2. TCP вычисление гипотенузы</h2>
+<p>Реализованы TCP-сервер и TCP-клиент для вычисления гипотенузы по теореме Пифагора. Клиент вводит два катета, отправляет их серверу, сервер выполняет вычисление и возвращает результат.</p>
+<p>Файлы:</p>
+<ul>
+<li><code>lab1_sockets/task2_tcp_math/tcp_math_server.py</code></li>
+<li><code>lab1_sockets/task2_tcp_math/tcp_math_client.py</code></li>
+</ul>
+<p>Запуск:</p>
+<pre><code class="language-bash">cd lab1_sockets/task2_tcp_math
+python3 tcp_math_server.py
+python3 tcp_math_client.py
+</code></pre>
+<h2 id="3-http-">Задание 3. Простой HTTP-сервер</h2>
+<p>Реализован HTTP-сервер, который при подключении клиента отправляет HTML-страницу из файла <code>index.html</code>.</p>
+<p>Файлы:</p>
+<ul>
+<li><code>lab1_sockets/task3_http_file/http_server.py</code></li>
+<li><code>lab1_sockets/task3_http_file/index.html</code></li>
+</ul>
+<p>Запуск:</p>
+<pre><code class="language-bash">cd lab1_sockets/task3_http_file
+python3 http_server.py
+</code></pre>
+<p>После запуска страница доступна по адресу:</p>
+<pre><code class="language-text">http://127.0.0.1:8080
+</code></pre>
+<h2 id="4">Задание 4. Многопользовательский чат</h2>
+<p>Реализован многопользовательский TCP-чат. Сервер принимает несколько подключений, создает отдельный поток для каждого клиента и пересылает сообщения другим участникам.</p>
+<p>Файлы:</p>
+<ul>
+<li><code>lab1_sockets/task4_chat/chat_server.py</code></li>
+<li><code>lab1_sockets/task4_chat/chat_client.py</code></li>
+</ul>
+<p>Запуск:</p>
+<pre><code class="language-bash">cd lab1_sockets/task4_chat
+python3 chat_server.py
+python3 chat_client.py
+</code></pre>
+<p>Для проверки можно открыть несколько клиентов в разных терминалах.</p>
+<h2 id="5-web-">Задание 5. Web-сервер оценок</h2>
+<p>Реализован простой web-сервер, который обрабатывает GET и POST-запросы. Через HTML-форму можно добавить дисциплину и оценку, после чего данные отображаются на странице.</p>
+<p>Файл:</p>
+<ul>
+<li><code>lab1_sockets/task5_web_grades/web_grades_server.py</code></li>
+</ul>
+<p>Запуск:</p>
+<pre><code class="language-bash">cd lab1_sockets/task5_web_grades
+python3 web_grades_server.py
+</code></pre>
+<p>После запуска страница доступна по адресу:</p>
+<pre><code class="language-text">http://127.0.0.1:8081
+</code></pre>
+<h2 id="_3">Вывод</h2>
+<p>В ходе лабораторной работы были реализованы UDP и TCP клиент-серверные приложения, простой HTTP-сервер, многопользовательский чат с потоками и web-сервер для обработки GET/POST-запросов. Работа демонстрирует базовые принципы сетевого взаимодействия и обработки клиентских подключений средствами Python.</p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href=".." class="btn btn-neutral float-left" title="Главная"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/Veeslyys/ITMO_ICT_WebDevelopment_2026-2027" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+      <span><a href=".." style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>
